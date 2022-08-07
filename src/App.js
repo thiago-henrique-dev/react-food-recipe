@@ -36,13 +36,11 @@ function App() {
             <input className="app__submit" type="submit" value="Search"></input>
         </form>
     
-      <div>
+      <div className="app__recipes">
         {recipes.map(recipe => {
             return <RecipeTile recipe={recipe}  />
 })}
       </div>
-
-
     </div>
   );
 }
