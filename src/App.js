@@ -1,9 +1,11 @@
 import './App.css';
 import Axios from 'axios'
 import { useState } from 'react'
+import RecipeTile from './components/RecipeTile';
 
 function App() {
    const [query, setQuery] = useState("")
+   const [recipes, setRecipes] = useState([])
   
   
    const YOUR_APP_ID = 'acd0ba84'
@@ -12,13 +14,19 @@ function App() {
 
   async function getRecipies(){
       var result = await Axios.get(url)
+      setRecipes(result.data.hits)
       console.log(result.data)
+   }
+
+   const submit = (e) => {
+    e.preventDefault();
+    getRecipies()
    }
 
   return (
     <div className="app">
-      <h1 onClick={getRecipies}>Food Recipe Plaza</h1>
-        <form className="app__searchForm">
+      <h1 >Food Recipe Plaza</h1>
+        <form className="app__searchForm" onSubmit={submit}>
             <input type="text" 
                    className='app__input'
                    placeholder='enter ingridient' 
@@ -27,6 +35,14 @@ function App() {
                     />
             <input className="app__submit" type="submit" value="Search"></input>
         </form>
+    
+      <div>
+        {recipes.map(recipe => {
+            return <RecipeTile recipe={recipe}  />
+})}
+      </div>
+
+
     </div>
   );
 }
